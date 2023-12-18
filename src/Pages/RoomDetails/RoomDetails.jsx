@@ -1,4 +1,4 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
@@ -10,6 +10,7 @@ import BookingForm from "../../Components/BookingForm/BookingForm";
 const RoomDetails = () => {
   const loadedRoom = useLoaderData();
   const navigate = useNavigate();
+  const { id } = useParams();
   const [reviews, setReviews] = useState("");
   const [myReviews, setMyReviews] = useState([]);
   const [number, setNumber] = useState("");
@@ -17,86 +18,46 @@ const RoomDetails = () => {
     loadedRoom;
 
   const { user } = useAuth();
+  console.log(id);
 
-  useEffect(() => {
-    axios
-      .get(`http://localhost:5001/review?sid=${_id}`)
-      .then((res) => setMyReviews(res.data));
-  }, [_id]);
+  axios.get(`http://localhost:5001/booked-room/${id}`).then((res) => {
+    console.log(res.data);
+  });
+  // useEffect(() => {
+  //   axios
+  //     .get(`http://localhost:5001/review?sid=${_id}`)
+  //     .then((res) => setMyReviews(res.data));
+  // }, [_id]);
 
-  const handleBooking = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const checkIn = form.checkIn.value;
-    const checkOut = form.checkOut.value;
+  // const handleReviews = () => {
+  //   const allReviews = {
+  //     reviews,
+  //     sid: _id,
+  //     name: user.displayName,
+  //     timestamp: new Date(),
+  //     rating: number,
+  //   };
 
-    const booking = {
-      roomId: _id,
-      img,
-      name,
-      available,
-      price,
-      checkIn,
-      checkOut,
-      email: user?.email,
-    };
-
-    // console.log(booking);
-
-    try {
-      if (user) {
-        fetch("http://localhost:5001/booking", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(booking),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.insertedId) {
-              Swal.fire("Success!", "Booking Successfull", "success");
-            }
-          });
-      } else {
-        Swal.fire("Error!", "You need to Login First", "error");
-        return navigate("/login");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleReviews = () => {
-    const allReviews = {
-      reviews,
-      sid: _id,
-      name: user.displayName,
-      timestamp: new Date(),
-      rating: number,
-    };
-
-    if (user?.email) {
-      fetch("http://localhost:5001/review", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(allReviews),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
-            console.log(data);
-            Swal.fire("Success!", "Your review has been added", "success");
-          }
-        });
-    } else {
-      Swal.fire("Error!", "You need to login first", "error");
-      return navigate("/login");
-    }
-  };
+  //   if (user?.email) {
+  //     fetch("http://localhost:5001/review", {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //       body: JSON.stringify(allReviews),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {
+  //         if (data.insertedId) {
+  //           console.log(data);
+  //           Swal.fire("Success!", "Your review has been added", "success");
+  //         }
+  //       });
+  //   } else {
+  //     Swal.fire("Error!", "You need to login first", "error");
+  //     return navigate("/login");
+  //   }
+  // };
 
   return (
     <div>
@@ -130,7 +91,7 @@ const RoomDetails = () => {
 
           {/* Show Review Area */}
 
-          <div className="mt-20">
+          {/* <div className="mt-20">
             <h2 className="text-2xl font-semibold">Reviews: </h2>
             {myReviews.length ? (
               <div>
@@ -143,10 +104,10 @@ const RoomDetails = () => {
                 No Reviews Yet
               </h2>
             )}
-          </div>
+          </div> */}
 
           {/* Review Textarea */}
-          <div className="mt-20">
+          {/* <div className="mt-20">
             <h2 className="text-2xl font-semibold">Post a Review </h2>
             <textarea
               className="border-2"
@@ -168,82 +129,28 @@ const RoomDetails = () => {
             <button onClick={handleReviews} className="btn btn-neutral mt-10">
               Submit
             </button>
-          </div>
+          </div> */}
         </div>
 
-        {/* Booking Form */}
-        {/* <div className="hero h-[500px] w-1/2 ">
-          <div className="hero-content flex-col">
-            <div className="text-center">
-              <h1 className="text-5xl font-bold">Booking Form</h1>
-            </div>
-            <div className="card flex-shrink-0 w-full max-w-sm shadow-xl bg-base-100">
-              <form onSubmit={handleBooking} className="card-body bg-[#F2F3F5]">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Check In</span>
-                  </label>
-                  <input
-                    type="date"
-                    placeholder="email"
-                    className="input input-bordered"
-                    name="checkIn"
-                    required
-                  />
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Check Out</span>
-                  </label>
-                  <input
-                    type="date"
-                    placeholder="password"
-                    className="input input-bordered"
-                    name="checkOut"
-                    required
-                  />
-                </div>
-                <div className="form-control mt-6">
-                  <button
-                    className={`btn btn-primary ${
-                      available === 0 ? "hidden" : "block"
-                    }`}
-                  >
-                    BOOK NOW
-                  </button>
-                  <p className="font-semibold text-center text-xl text-red-500">
-                    {available === 0 && "Booking Not Available"}
-                  </p>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div> */}
-
-        <BookingForm />
+        <BookingForm user={user} loadedRoom={loadedRoom} />
       </div>
     </div>
   );
 };
 
-const Reviews = ({ review }) => {
-  const { reviews, name, timestamp, rating } = review;
-  return (
-    <div className="mt-5">
-      <p className="text-xl text-blue-600 font-medium">{reviews}</p>
-      <p className="font-medium">Date: {timestamp}</p>
-      <p className="font-medium">Raitng: {rating}</p>
-      <p className="font-medium">
-        Review By: <span>{name}</span>{" "}
-      </p>
-      {/* <img className="rounded-full" src={user?.photoURL} alt="" /> */}
-    </div>
-  );
-};
-
-Reviews.propTypes = {
-  review: PropTypes.object,
-  user: PropTypes.object,
-};
+// const Reviews = ({ review }) => {
+//   const { reviews, name, timestamp, rating } = review;
+//   return (
+//     <div className="mt-5">
+//       <p className="text-xl text-blue-600 font-medium">{reviews}</p>
+//       <p className="font-medium">Date: {timestamp}</p>
+//       <p className="font-medium">Raitng: {rating}</p>
+//       <p className="font-medium">
+//         Review By: <span>{name}</span>{" "}
+//       </p>
+//       {/* <img className="rounded-full" src={user?.photoURL} alt="" /> */}
+//     </div>
+//   );
+// };
 
 export default RoomDetails;

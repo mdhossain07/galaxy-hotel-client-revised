@@ -1,44 +1,108 @@
 import { useState } from "react";
 import { DateRange } from "react-date-range";
-
-import format from "date-fns/format";
-import addDays from "date-fns/addDays";
-
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import PropTypes from "prop-types";
 
-const BookingForm = () => {
-  const [selectedRange, setSelectedRange] = useState([
-    {
-      startDate: new Date(),
-      endDate: null,
-      key: "selection,",
-    },
-  ]);
+const BookingForm = ({ user, loadedRoom }) => {
+  console.log(loadedRoom);
+  const { _id, img, name, offers, available, price, description, size } =
+    loadedRoom;
 
-  console.log(selectedRange);
+  const navigate = useNavigate();
+
+  const [selectedRange, setSelectedRange] = useState({
+    startDate: new Date(),
+    endDate: null,
+    key: "selection",
+  });
+
+  const [bookedDate, setBookedDate] = useState([]);
+
+  const handleChange = (ranges) => {
+    const { startDate, endDate } = ranges.selection;
+    setSelectedRange({ startDate, endDate });
+  };
 
   const handleBooking = () => {
-    const startDate = selectedRange[0].startDate;
-    const endDate = selectedRange[0].endDate;
+    const days = [];
+    const currentDate = new Date(selectedRange?.startDate);
 
-    console.log(`${startDate} to ${endDate}`);
+    while (currentDate <= new Date(selectedRange?.endDate)) {
+      const dateString = currentDate.toString();
+      days.push(dateString);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    const dateObjects = days?.map((day) => new Date(day));
+    setBookedDate(dateObjects);
+
+    const booking = {
+      roomId: _id,
+      img,
+      name,
+      available,
+      price,
+      bookedDates: dateObjects,
+      email: user?.email,
+    };
+
+    try {
+      if (user) {
+        fetch("http://localhost:5001/booking", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(booking),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+              Swal.fire("Success!", "Booking Successfull", "success");
+            }
+          });
+      } else {
+        Swal.fire("Error!", "You need to Login First", "error");
+        return navigate("/login");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
+
+  console.log(bookedDate);
+
   return (
     <div>
       <h2>Booking Form</h2>
 
       <DateRange
         editableDateInputs={true}
-        onChange={(item) => setSelectedRange([item.selection])}
+        onChange={handleChange}
         moveRangeOnFirstSelection={false}
-        ranges={selectedRange}
-        color={"#3d91ff"}
-        rangeColors={["#3d91ff", "#3ecf8e", "#fed14c"]}
+        ranges={[selectedRange]}
+        rangeColors={["#3d91ff", "#FF0000"]}
+        disabledDates={bookedDate}
       />
-      <button onClick={handleBooking}>Book Room </button>
+      <br />
+      <button
+        className={`btn btn-primary ${
+          bookedDate.length > 0 ? "btn-disabled" : "btn-primary"
+        }`}
+        onClick={handleBooking}
+      >
+        Book Room{" "}
+      </button>
     </div>
   );
+};
+
+BookingForm.propTypes = {
+  user: PropTypes.object,
+  loadedRoom: PropTypes.object,
 };
 
 export default BookingForm;
