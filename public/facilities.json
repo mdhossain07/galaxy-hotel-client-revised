@@ -1,0 +1,26 @@
+[
+    {
+        "service_name" : "Room Service",
+        "service_description": "Enjoy the convenience of our 24/7 room service, with a wide selection of delectable dishes delivered directly to your room, ensuring a delightful dining experience without leaving your cozy space.."
+    },
+    {
+        "service_name" : "Pick Up & Drop",
+        "service_description": "We offer hassle-free transportation services, including airport pick-up and drop-off, making your arrival and departure a breeze. Let us take care of your transportation needs."
+    },
+    {
+        "service_name" : "Fiber Internet",
+        "service_description": "Stay connected seamlessly with lightning-fast fiber internet access. Whether for business or leisure, enjoy uninterrupted online connectivity during your stay."
+    },
+    {
+        "service_name" : "Breakfast",
+        "service_description": "Start your day right with our complimentary breakfast, featuring a variety of options to suit your taste. Savor a delicious morning meal to fuel your adventures."
+    },
+    {
+        "service_name" : "Swimming Pool",
+        "service_description": "Take a refreshing dip or simply lounge by our pristine swimming pool. It's the perfect place to unwind and cool off after a day of exploration."
+    },
+    {
+        "service_name" : "Parking Space",
+        "service_description": "Rest easy knowing your vehicle is secure with our ample parking space. Enjoy the convenience of on-site parking, ensuring a stress-free stay."
+    }
+]
