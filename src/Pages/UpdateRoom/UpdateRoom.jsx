@@ -1,22 +1,49 @@
+import { useState } from "react";
+import { DateRange } from "react-date-range";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const UpdateRoom = () => {
   const navigate = useNavigate();
   const loadedRoom = useLoaderData();
-  const { _id, img, name, checkIn, checkOut } = loadedRoom;
+  const { _id, img, name, bookedDates } = loadedRoom;
 
-  console.log(loadedRoom);
+  const startBooking = new Date(loadedRoom?.bookedDates[0]);
+  // const actualDate = startBooking.setDate(startBooking.getDate() - 1);
+  // console.log(startBooking, actualDate);
+  const lastIndex = loadedRoom?.bookedDates.length - 1;
+  const lastBooking = new Date(loadedRoom?.bookedDates[lastIndex]);
+  console.log(startBooking, lastBooking);
 
-  const handleUpdate = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const checkIn = form.checkIn.value;
-    const checkOut = form.checkOut.value;
+  const [selectedRange, setSelectedRange] = useState({
+    startDate: startBooking,
+    endDate: null,
+    key: "selection",
+  });
+
+  const [bookedDate, setBookedDate] = useState([]);
+
+  const handleChange = (ranges) => {
+    const { startDate, endDate } = ranges.selection;
+    setSelectedRange({ startDate, endDate });
+  };
+
+  // const reservedDateObjects = reserved?.map((item) => new Date(item));
+
+  const handleUpdate = () => {
+    const days = [];
+    const currentDate = new Date(selectedRange?.startDate);
+
+    while (currentDate <= new Date(selectedRange?.endDate)) {
+      const dateString = currentDate.toString();
+      days.push(dateString);
+      currentDate.setDate(currentDate.getDate() + 1);
+    }
+    const dateObjects = days?.map((day) => new Date(day));
+    setBookedDate(dateObjects);
 
     const updatedBooking = {
-      checkIn,
-      checkOut,
+      bookedDates: dateObjects,
     };
 
     console.log(updatedBooking);
@@ -47,9 +74,28 @@ const UpdateRoom = () => {
       <div className="hero min-h-screen -mt-36">
         <div className="hero-content flex-col">
           <div className="text-center">
-            <h1 className="text-5xl font-bold">Update Booking</h1>
+            <h1 className="text-3xl font-bold mt-32">Update Booking</h1>
           </div>
-          <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+
+          <DateRange
+            editableDateInputs={true}
+            onChange={handleChange}
+            moveRangeOnFirstSelection={false}
+            ranges={[selectedRange]}
+            rangeColors={["#3d91ff", "#FF0000"]}
+            // disabledDates={reservedDateObjects}
+          />
+          <br />
+          <button
+            className={`btn btn-primary ${
+              bookedDate.length > 0 ? "btn-disabled" : "btn-primary"
+            }`}
+            onClick={handleUpdate}
+          >
+            Book Room{" "}
+          </button>
+
+          {/* <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <form onSubmit={handleUpdate} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -81,7 +127,7 @@ const UpdateRoom = () => {
                 <button className="btn btn-primary">Update</button>
               </div>
             </form>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

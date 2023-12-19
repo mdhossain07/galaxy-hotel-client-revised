@@ -6,8 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 
-const BookingForm = ({ user, loadedRoom }) => {
-  console.log(loadedRoom);
+const BookingForm = ({ user, loadedRoom, reserved }) => {
   const { _id, img, name, offers, available, price, description, size } =
     loadedRoom;
 
@@ -26,6 +25,9 @@ const BookingForm = ({ user, loadedRoom }) => {
     setSelectedRange({ startDate, endDate });
   };
 
+  const reservedDateObjects = reserved?.map((item) => new Date(item));
+  // console.log(reservedDateObjects);
+
   const handleBooking = () => {
     const days = [];
     const currentDate = new Date(selectedRange?.startDate);
@@ -42,7 +44,6 @@ const BookingForm = ({ user, loadedRoom }) => {
       roomId: _id,
       img,
       name,
-      available,
       price,
       bookedDates: dateObjects,
       email: user?.email,
@@ -73,7 +74,7 @@ const BookingForm = ({ user, loadedRoom }) => {
     }
   };
 
-  console.log(bookedDate);
+  // console.log(bookedDate);
 
   return (
     <div>
@@ -85,7 +86,7 @@ const BookingForm = ({ user, loadedRoom }) => {
         moveRangeOnFirstSelection={false}
         ranges={[selectedRange]}
         rangeColors={["#3d91ff", "#FF0000"]}
-        disabledDates={bookedDate}
+        disabledDates={reservedDateObjects}
       />
       <br />
       <button
@@ -103,6 +104,7 @@ const BookingForm = ({ user, loadedRoom }) => {
 BookingForm.propTypes = {
   user: PropTypes.object,
   loadedRoom: PropTypes.object,
+  reserved: PropTypes.array,
 };
 
 export default BookingForm;

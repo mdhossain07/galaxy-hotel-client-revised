@@ -11,6 +11,8 @@ const MyRooms = () => {
   const { user, loading } = useAuth();
   const [myRooms, setMyRooms] = useState([]);
 
+  const reserved = myRooms[0]?.bookedDates[0];
+
   const url = `http://localhost:5001/booking?email=${user?.email}`;
 
   useEffect(() => {
@@ -22,15 +24,15 @@ const MyRooms = () => {
   const handleRemove = (id, checkIn) => {
     console.log("delete", id, checkIn);
 
-    const checkInDate = moment(checkIn);
+    const checkInDate = moment(reserved);
     // console.log(checkInDate);
     const copyDate = checkInDate.clone();
-    const cancelDate = copyDate.subtract(1, "day");
+    const cancelDate = copyDate.subtract(2, "day");
     // console.log(cancelDate);
     const currentDate = moment();
     // console.log(currentDate);
     const checkCancel = currentDate.isBefore(cancelDate);
-    // console.log(checkCancel);
+    console.log(checkCancel);
 
     if (checkCancel) {
       Swal.fire({

@@ -9,19 +9,23 @@ import BookingForm from "../../Components/BookingForm/BookingForm";
 
 const RoomDetails = () => {
   const loadedRoom = useLoaderData();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { id } = useParams();
-  const [reviews, setReviews] = useState("");
-  const [myReviews, setMyReviews] = useState([]);
-  const [number, setNumber] = useState("");
+  // const [reviews, setReviews] = useState("");
+  // const [myReviews, setMyReviews] = useState([]);
+  // const [number, setNumber] = useState("");
   const { _id, img, name, offers, available, price, description, size } =
     loadedRoom;
 
   const { user } = useAuth();
-  console.log(id);
+  const [reserved, setReserved] = useState([]);
+  // console.log(id);
+
+  // console.log(reserved);
 
   axios.get(`http://localhost:5001/booked-room/${id}`).then((res) => {
-    console.log(res.data);
+    // console.log(res.data.bookedDates);
+    setReserved(res.data?.bookedDates);
   });
   // useEffect(() => {
   //   axios
@@ -132,7 +136,7 @@ const RoomDetails = () => {
           </div> */}
         </div>
 
-        <BookingForm user={user} loadedRoom={loadedRoom} />
+        <BookingForm reserved={reserved} user={user} loadedRoom={loadedRoom} />
       </div>
     </div>
   );
