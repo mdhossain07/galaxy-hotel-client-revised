@@ -1,3 +1,4 @@
+import axios from "axios";
 import { useState } from "react";
 import { DateRange } from "react-date-range";
 import { useLoaderData, useNavigate } from "react-router-dom";
@@ -8,25 +9,23 @@ const UpdateRoom = () => {
   const loadedRoom = useLoaderData();
   const { _id, img, name, bookedDates } = loadedRoom;
 
-  const startBooking = new Date(loadedRoom?.bookedDates[0]);
-  // const actualDate = startBooking.setDate(startBooking.getDate() - 1);
-  // console.log(startBooking, actualDate);
-  const lastIndex = loadedRoom?.bookedDates.length - 1;
-  const lastBooking = new Date(loadedRoom?.bookedDates[lastIndex]);
-  console.log(startBooking, lastBooking);
+  const lastIndex = bookedDates.length - 1;
 
   const [selectedRange, setSelectedRange] = useState({
-    startDate: startBooking,
-    endDate: null,
+    startDate: new Date(bookedDates[0]),
+    endDate: new Date(bookedDates[lastIndex]),
     key: "selection",
   });
 
   const [bookedDate, setBookedDate] = useState([]);
+  console.log(bookedDate);
 
   const handleChange = (ranges) => {
     const { startDate, endDate } = ranges.selection;
     setSelectedRange({ startDate, endDate });
   };
+
+  console.log(selectedRange);
 
   // const reservedDateObjects = reserved?.map((item) => new Date(item));
 
@@ -46,19 +45,12 @@ const UpdateRoom = () => {
       bookedDates: dateObjects,
     };
 
-    console.log(updatedBooking);
+    console.log(updatedBooking.bookedDates);
 
-    fetch(`http://localhost:5001/booking/${_id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updatedBooking),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        if (data.modifiedCount > 0) {
+    axios
+      .put(`http://localhost:5001/booking/${_id}`, updatedBooking)
+      .then((res) => {
+        if (res.data.modifiedCount > 0) {
           Swal.fire("Success!", "Booking info has been updated", "success");
           navigate("/my-rooms");
         }
@@ -83,7 +75,6 @@ const UpdateRoom = () => {
             moveRangeOnFirstSelection={false}
             ranges={[selectedRange]}
             rangeColors={["#3d91ff", "#FF0000"]}
-            // disabledDates={reservedDateObjects}
           />
           <br />
           <button
@@ -92,7 +83,7 @@ const UpdateRoom = () => {
             }`}
             onClick={handleUpdate}
           >
-            Book Room{" "}
+            Update Booking{" "}
           </button>
 
           {/* <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
