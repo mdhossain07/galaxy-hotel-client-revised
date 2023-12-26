@@ -1,8 +1,7 @@
-import { useLoaderData, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import Swal from "sweetalert2";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import BookingForm from "../../Components/BookingForm/BookingForm";
@@ -11,39 +10,17 @@ import PostReviews from "../../Components/Reviews/PostReviews/PostReviews";
 
 const RoomDetails = () => {
   const loadedRoom = useLoaderData();
-  // const navigate = useNavigate();
   const { id } = useParams();
-  // const [reviews, setReviews] = useState("");
 
   const { _id, img, name, offers, available, price, description, size } =
     loadedRoom;
 
   const { user } = useAuth();
   const [reserved, setReserved] = useState([]);
-  // console.log(id);
-
-  // console.log(reserved);
 
   axios.get(`http://localhost:5001/booked-room/${id}`).then((res) => {
-    // console.log(res.data.bookedDates);
     setReserved(res.data?.bookedDates);
   });
-  // useEffect(() => {
-  //   axios
-  //     .get(`http://localhost:5001/review?sid=${_id}`)
-  //     .then((res) => setMyReviews(res.data));
-  // }, [_id]);
-
-  // const handleReviews = () => {
-  //   const allReviews = {
-  //     reviews,
-  //     sid: _id,
-  //     name: user.displayName,
-  //     timestamp: new Date(),
-  //     rating: number,
-  //   };
-
-  // };
 
   return (
     <div>
@@ -75,11 +52,8 @@ const RoomDetails = () => {
             </p>
           </div>
 
-          {/* Show Review Area */}
-
           <Reviews />
 
-          {/* Review Textarea */}
           <PostReviews />
         </div>
 

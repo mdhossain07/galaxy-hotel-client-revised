@@ -33,7 +33,11 @@ const Reviews = () => {
         {reviews?.length ? (
           <div>
             {reviews?.map((item, index) => (
-              <SwiperSlide key={index}>{item?.reviews}</SwiperSlide>
+              <SwiperSlide key={index} item={item}>
+                <div className="shadow-md bg-base-200 h-[100px]">
+                  {item?.reviews}
+                </div>
+              </SwiperSlide>
             ))}
           </div>
         ) : (
