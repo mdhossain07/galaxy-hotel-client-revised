@@ -53,23 +53,12 @@ const PostReviews = () => {
         cols="80"
         rows="6"
       ></textarea>
-      {/* <label htmlFor="">
-        Rating on 5:
-        <input
-          onBlur={(e) => setNumber(e.target.value)}
-          type="number"
-          name="5"
-          id=""
-          className="ml-3 border-2"
-        />
-      </label> */}
       <ReactStars
         count={5}
         onChange={ratingChanged}
         size={24}
         activeColor="#ffd700"
       />
-      ,
       <br />
       <button onClick={handleReviews} className="btn btn-neutral mt-10">
         Submit

@@ -9,13 +9,13 @@ const Testimonials = () => {
     <>
       <h2 className="text-4xl font-semibold text-center mt-16">Testimonials</h2>
       <Swiper
-        data-aos="zoom-in-up"
+        // data-aos="zoom-in-up"
         // install Swiper modules
         modules={[Pagination]}
         spaceBetween={50}
         slidesPerView={1}
         pagination={{ clickable: true }}
-        className="w-[400px] lg:w-[800px] mx-auto mt-16"
+        className="w-[400px] lg:w-[800px] mx-auto mt-16 overflow-x-hidden"
       >
         <SwiperSlide>
           <figure className="max-w-screen-md mx-auto text-center -mt-2">

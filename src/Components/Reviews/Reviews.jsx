@@ -20,7 +20,9 @@ const Reviews = () => {
 
   return (
     <div>
-      <h2>Reviews</h2>
+      <h2 className="text-center font-semibold text-3xl my-10">
+        Customer Reviews
+      </h2>
 
       <Swiper
         pagination={{
@@ -34,8 +36,12 @@ const Reviews = () => {
           <div>
             {reviews?.map((item, index) => (
               <SwiperSlide key={index} item={item}>
-                <div className="shadow-md bg-base-200 h-[100px]">
+                <div className="shadow-md  rounded-lg text-center text-black py-5">
                   {item?.reviews}
+                  <br />
+                  Reviewed By: {item?.name}
+                  <br />
+                  Rating: {item?.rating}
                 </div>
               </SwiperSlide>
             ))}

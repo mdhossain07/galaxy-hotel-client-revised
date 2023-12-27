@@ -43,7 +43,7 @@ const RoomDetails = () => {
 
             <p className="">
               Availability <br />
-              <span className="text-xl">{available} Rooms</span>
+              <span className="text-xl">{available} Rooms </span>
             </p>
 
             <p className="">
