@@ -20,15 +20,15 @@ const Rooms = () => {
     });
   }, []);
 
-  // useEffect(() => {
-  //   const filteredRooms = rooms.filter((room) => {
-  //     const price = room.price;
-  //     return (
-  //       (!lowPrice || price >= lowPrice) && (!highPrice || price <= highPrice)
-  //     );
-  //   });
-  //   setFilterRooms(filteredRooms);
-  // }, [lowPrice, highPrice, rooms]);
+  useEffect(() => {
+    const filteredRooms = rooms.filter((room) => {
+      const price = room.price;
+      return (
+        (!lowPrice || price >= lowPrice) && (!highPrice || price <= highPrice)
+      );
+    });
+    setFilterRooms(filteredRooms);
+  }, [lowPrice, highPrice, rooms]);
 
   return (
     <div>
@@ -61,7 +61,7 @@ const Rooms = () => {
         <span className="loading loading-infinity loading-lg"></span>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-2 justify-items-center">
-          {rooms.map((room) => (
+          {filterRooms?.map((room) => (
             <RoomsCard key={room._id} room={room}></RoomsCard>
           ))}
         </div>
