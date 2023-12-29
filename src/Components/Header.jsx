@@ -6,7 +6,7 @@ import banner3 from "../assets/images/room-4.jpg";
 const Header = () => {
   return (
     <div className="">
-      <div className="carousel w-[570px] md:w-full h-[80vh] ">
+      <div className="carousel w-1/2 mx-auto md:w-1/2 lg:w-full h-[80vh] ">
         <div id="slide1" className="carousel-item relative w-full">
           <div
             className="hero rounded-lg"

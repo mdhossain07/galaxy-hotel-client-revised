@@ -1,7 +1,6 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
-import PropTypes from "prop-types";
 import axios from "axios";
 import { Helmet } from "react-helmet-async";
 import BookingForm from "../../Components/BookingForm/BookingForm";
@@ -12,8 +11,7 @@ const RoomDetails = () => {
   const loadedRoom = useLoaderData();
   const { id } = useParams();
 
-  const { _id, img, name, offers, available, price, description, size } =
-    loadedRoom;
+  const { img, offers, available, price, description, size } = loadedRoom;
 
   const { user } = useAuth();
   const [reserved, setReserved] = useState([]);
@@ -27,7 +25,7 @@ const RoomDetails = () => {
       <Helmet>
         <title>Galaxy Luxury Hotel | Room Details </title>
       </Helmet>
-      <div className="flex flex-col md:flex-row justify-around gap-10">
+      <div className="flex flex-col-reverse lg:flex-row justify-around gap-10">
         <div className="md:w-1/2 mt-10">
           <img className="w-full rounded-lg mb-10 " src={img} alt="" />
           <h2 className="text-2xl font-semibold mb-5">Description of Room</h2>
@@ -51,14 +49,13 @@ const RoomDetails = () => {
               <span className="text-xl">{offers}</span>
             </p>
           </div>
-
-          <Reviews />
-
-          <PostReviews />
         </div>
 
         <BookingForm reserved={reserved} user={user} loadedRoom={loadedRoom} />
       </div>
+      <Reviews />
+
+      <PostReviews />
     </div>
   );
 };

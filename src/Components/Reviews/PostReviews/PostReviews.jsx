@@ -45,7 +45,7 @@ const PostReviews = () => {
     }
   };
   return (
-    <div className="mt-20">
+    <div className="mt-20 border-red-500">
       <h2 className="text-2xl font-semibold">Post a Review </h2>
       <textarea
         className="border-2"

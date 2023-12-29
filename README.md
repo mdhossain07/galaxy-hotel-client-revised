@@ -11,3 +11,4 @@ Features:
 5. Users can update their booking time as they want.
 6. Users data is protected with JWT authentication system.
 7. Users can search rooms by Price Filter range.
+8. Rooms booked by one users, will be disabled for the time range.

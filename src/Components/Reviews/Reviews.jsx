@@ -19,7 +19,7 @@ const Reviews = () => {
   }, [id]);
 
   return (
-    <div>
+    <div className="w-1/2 mx-auto">
       <h2 className="text-center font-semibold text-3xl my-10">
         Customer Reviews
       </h2>
