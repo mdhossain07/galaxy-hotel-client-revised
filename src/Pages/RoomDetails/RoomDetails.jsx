@@ -12,6 +12,7 @@ const RoomDetails = () => {
   const { id } = useParams();
 
   const { img, offers, available, price, description, size } = loadedRoom;
+  console.log(loadedRoom);
 
   const { user } = useAuth();
   const [reserved, setReserved] = useState([]);

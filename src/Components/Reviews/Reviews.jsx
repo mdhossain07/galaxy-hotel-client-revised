@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import ReactStars from "react-rating-stars-component";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
@@ -19,15 +20,12 @@ const Reviews = () => {
   }, [id]);
 
   return (
-    <div className="w-1/2 mx-auto">
-      <h2 className="text-center font-semibold text-3xl my-10">
+    <div className="w-[500px] lg:w-1/2 mx-auto mt-16">
+      <h2 className="text-center font-semibold text-3xl my-8">
         Customer Reviews
       </h2>
 
       <Swiper
-        pagination={{
-          type: "fraction",
-        }}
         navigation={true}
         modules={[Pagination, Navigation]}
         className="mySwiper"
@@ -36,12 +34,13 @@ const Reviews = () => {
           <div>
             {reviews?.map((item, index) => (
               <SwiperSlide key={index} item={item}>
-                <div className="shadow-md  rounded-lg text-center text-black py-5">
-                  {item?.reviews}
-                  <br />
-                  Reviewed By: {item?.name}
-                  <br />
-                  Rating: {item?.rating}
+                <div className="shadow-md rounded-lg text-center text-black py-5 space-y-5 bg-[#F5F6F7] border border-[#AA8453]">
+                  <p className="text-xl font-medium"> {item?.reviews}</p>
+                  <p>Reviewed By: {item?.name}</p>
+                  <div className="flex items-center justify-center gap-2">
+                    <p>Rating: </p>
+                    <ReactStars size={20} value={item?.rating} edit={false} />
+                  </div>
                 </div>
               </SwiperSlide>
             ))}

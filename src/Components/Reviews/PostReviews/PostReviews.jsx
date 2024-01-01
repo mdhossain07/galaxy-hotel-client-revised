@@ -45,13 +45,13 @@ const PostReviews = () => {
     }
   };
   return (
-    <div className="mt-20 border-red-500">
+    <div className="mt-20 w-[500px] lg:w-1/2 mx-auto">
       <h2 className="text-2xl font-semibold">Post a Review </h2>
       <textarea
         className="border-2"
         onBlur={(e) => setReviews(e.target.value)}
-        cols="80"
-        rows="6"
+        cols="50"
+        rows="4"
       ></textarea>
       <ReactStars
         count={5}
@@ -61,7 +61,7 @@ const PostReviews = () => {
       />
       <br />
       <button onClick={handleReviews} className="btn btn-neutral mt-10">
-        Submit
+        Submit Review
       </button>
     </div>
   );

@@ -11,8 +11,8 @@ const Rooms = () => {
         Check Our Rooms
       </h2>
       <div
-        // data-aos="fade-up"
-        // data-aos-duration="3000"
+        data-aos="fade-up"
+        data-aos-duration="3000"
         className="grid grid-cols-1 md:grid-cols-2 overflow-x-hidden gap-10 justify-items-center mt-10 "
       >
         <img className="rounded-lg" src={room1} alt="" />
@@ -21,9 +21,9 @@ const Rooms = () => {
         <img className="rounded-lg" src={room4} alt="" />
       </div>
       <div
-        // data-aos="fade-right"
-        // data-aos-offset="300"
-        // data-aos-easing="ease-in-sine"
+        data-aos="fade-right"
+        data-aos-offset="300"
+        data-aos-easing="ease-in-sine"
         className="flex justify-center mt-10 overflow-x-hidden"
       >
         <Link to="/rooms">

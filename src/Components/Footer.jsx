@@ -4,7 +4,7 @@ import logo from "../assets/images/Galaxy Luxury Hotel Logo.png";
 const Footer = () => {
   return (
     <div>
-      <footer className="footer w-[630px] md:w-full p-10 bg-[#222222] text-[#A6A6A6] mt-20">
+      <footer className="footer p-10 bg-[#222222] text-[#A6A6A6] mt-20">
         <aside>
           <img src={logo} alt="" />
         </aside>

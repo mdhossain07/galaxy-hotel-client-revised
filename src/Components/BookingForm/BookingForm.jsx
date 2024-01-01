@@ -7,8 +7,7 @@ import Swal from "sweetalert2";
 import PropTypes from "prop-types";
 
 const BookingForm = ({ user, loadedRoom, reserved }) => {
-  const { _id, img, name, offers, available, price, description, size } =
-    loadedRoom;
+  const { _id, img, name, price } = loadedRoom;
 
   const navigate = useNavigate();
 
@@ -26,7 +25,6 @@ const BookingForm = ({ user, loadedRoom, reserved }) => {
   };
 
   const reservedDateObjects = reserved?.map((item) => new Date(item));
-  // console.log(reservedDateObjects);
 
   const handleBooking = () => {
     const days = [];
@@ -77,25 +75,25 @@ const BookingForm = ({ user, loadedRoom, reserved }) => {
   // console.log(bookedDate);
 
   return (
-    <div>
-      <h2>Booking Form</h2>
+    <div className="">
+      <h2 className="text-3xl font-medium my-10">Booking Form</h2>
 
       <DateRange
         editableDateInputs={true}
         onChange={handleChange}
         moveRangeOnFirstSelection={false}
         ranges={[selectedRange]}
-        rangeColors={["#3d91ff", "#FF0000"]}
+        rangeColors={["#c99f68", "#FF0000"]}
         disabledDates={reservedDateObjects}
       />
       <br />
       <button
-        className={`btn btn-primary ${
+        className={`w-full mt-5 p-3 rounded-lg bg-[#AA8453] hover:bg-[#c99f68] text-white border-none text-md ${
           bookedDate.length > 0 ? "btn-disabled" : "btn-primary"
         }`}
         onClick={handleBooking}
       >
-        Book Room{" "}
+        Confirm Booking
       </button>
     </div>
   );

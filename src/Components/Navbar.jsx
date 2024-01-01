@@ -140,7 +140,7 @@ const Navbar = () => {
           </div>
 
           {/* Page content here */}
-          <div className="bg-base=200 container mx-auto px-8 md:px-16 lg:px-24">
+          <div className="container mx-auto px-8 md:px-16 lg:px-24">
             <Outlet />
           </div>
         </div>
