@@ -38,14 +38,14 @@ const Rooms = () => {
 
       {/* Price Filtering */}
 
-      <div className="space-y-5 ml-10 mt-10">
+      <div className="space-y-5 ml-2 lg:ml-16 mt-10">
         <h2 className="text-xl font-medium">Filter By Price Range</h2>
 
         <input
           type="text"
           placeholder="Min Price"
           value={lowPrice}
-          className="border-2 border-[#AA8453] rounded-md indent-3 h-[30px] w-[200px] ml-10"
+          className="border-2 border-[#AA8453] rounded-md indent-3 h-[30px] w-[200px]"
           onChange={(e) => setLowPrice(parseFloat(e.target.value))}
         />
         <input
