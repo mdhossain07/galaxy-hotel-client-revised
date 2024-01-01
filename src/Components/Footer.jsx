@@ -6,19 +6,11 @@ const Footer = () => {
     <div>
       <footer className="footer p-10 bg-[#222222] text-[#A6A6A6] mt-20">
         <aside>
-          <img src={logo} alt="" />
+          <img className="w-[350px] px-16 " src={logo} alt="" />
         </aside>
 
         <nav className="md:mt-10">
-          <header className="footer-title">Services</header>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
-        </nav>
-
-        <nav className="md:mt-10">
-          <header className="footer-title">Legal</header>
+          <header className="footer-title">Quick Links</header>
 
           <Link to="/terms-of-use" className="link link-hover">
             Terms of use
