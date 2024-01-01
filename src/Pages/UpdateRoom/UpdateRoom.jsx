@@ -27,8 +27,6 @@ const UpdateRoom = () => {
 
   console.log(selectedRange);
 
-  // const reservedDateObjects = reserved?.map((item) => new Date(item));
-
   const handleUpdate = () => {
     const days = [];
     const currentDate = new Date(selectedRange?.startDate);
@@ -48,7 +46,10 @@ const UpdateRoom = () => {
     console.log(updatedBooking.bookedDates);
 
     axios
-      .put(`http://localhost:5001/booking/${_id}`, updatedBooking)
+      .put(
+        `https://galaxy-hotel-server.vercel.app/booking/${_id}`,
+        updatedBooking
+      )
       .then((res) => {
         if (res.data.modifiedCount > 0) {
           Swal.fire("Success!", "Booking info has been updated", "success");

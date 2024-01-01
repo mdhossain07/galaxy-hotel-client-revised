@@ -26,7 +26,7 @@ const Login = () => {
         // get access token
         axios
           .post(
-            "http://localhost:5001/jwt",
+            "https://galaxy-hotel-server.vercel.app/jwt",
             { email: res.user.email },
             // user,
             { withCredentials: true }
@@ -49,7 +49,7 @@ const Login = () => {
       .then((res) => {
         axios
           .post(
-            "http://localhost:5001/jwt",
+            "https://galaxy-hotel-server.vercel.app/jwt",
             { email: res.user.email },
             // user,
             { withCredentials: true }

@@ -13,7 +13,7 @@ const MyRooms = () => {
 
   const reserved = myRooms[0]?.bookedDates[0];
 
-  const url = `http://localhost:5001/booking?email=${user?.email}`;
+  const url = `https://galaxy-hotel-server.vercel.app/booking?email=${user?.email}`;
 
   useEffect(() => {
     axios
@@ -45,7 +45,7 @@ const MyRooms = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`http://localhost:5001/booking/${id}`, {
+          fetch(`https://galaxy-hotel-server.vercel.app/booking/${id}`, {
             method: "DELETE",
           })
             .then((res) => res.json())

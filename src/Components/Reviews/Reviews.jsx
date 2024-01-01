@@ -14,9 +14,11 @@ const Reviews = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:5001/reviews?sid=${id}`).then((res) => {
-      setReviews(res.data);
-    });
+    axios
+      .get(`https://galaxy-hotel-server.vercel.app/reviews?sid=${id}`)
+      .then((res) => {
+        setReviews(res.data);
+      });
   }, [id]);
 
   return (

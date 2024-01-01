@@ -12,14 +12,15 @@ const RoomDetails = () => {
   const { id } = useParams();
 
   const { img, offers, available, price, description, size } = loadedRoom;
-  console.log(loadedRoom);
 
   const { user } = useAuth();
   const [reserved, setReserved] = useState([]);
 
-  axios.get(`http://localhost:5001/booked-room/${id}`).then((res) => {
-    setReserved(res.data?.bookedDates);
-  });
+  axios
+    .get(`https://galaxy-hotel-server.vercel.app/booked-room/${id}`)
+    .then((res) => {
+      setReserved(res.data?.bookedDates);
+    });
 
   return (
     <div>

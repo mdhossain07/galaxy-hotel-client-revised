@@ -25,7 +25,7 @@ const PostReviews = () => {
     };
 
     if (user?.email) {
-      fetch("http://localhost:5001/review", {
+      fetch("https://galaxy-hotel-server.vercel.app/review", {
         method: "POST",
         headers: {
           "content-type": "application/json",

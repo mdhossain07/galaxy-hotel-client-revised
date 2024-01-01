@@ -49,7 +49,7 @@ const BookingForm = ({ user, loadedRoom, reserved }) => {
 
     try {
       if (user) {
-        fetch("http://localhost:5001/booking", {
+        fetch("https://galaxy-hotel-server.vercel.app/booking", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -58,9 +58,9 @@ const BookingForm = ({ user, loadedRoom, reserved }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             if (data.insertedId) {
               Swal.fire("Success!", "Booking Successfull", "success");
+              navigate("/my-rooms");
             }
           });
       } else {
@@ -71,8 +71,6 @@ const BookingForm = ({ user, loadedRoom, reserved }) => {
       console.log(err);
     }
   };
-
-  // console.log(bookedDate);
 
   return (
     <div className="">
